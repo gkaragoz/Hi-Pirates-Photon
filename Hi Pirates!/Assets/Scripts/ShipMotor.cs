@@ -1,39 +1,19 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class ShipMotor : MonoBehaviour {
 
-    public bool goForward;
-    public bool rotatingRight, rotatingLeft;
     public float movementSpeed;
     public float rotationSpeed;
-    public float slopeSpeed;
 
-    private float _rotationY, _rotationZ;
+    private Rigidbody _rb;
 
-    private void FixedUpdate() {
-        if (goForward)
-            transform.Translate(Vector3.forward * movementSpeed * Time.deltaTime);
+    private void Awake() {
+        _rb = GetComponentInChildren<Rigidbody>();
+    }
 
-        if (rotatingRight) {
-            _rotationY += Time.deltaTime * rotationSpeed;
-            if (_rotationZ > -15f)
-                _rotationZ -= Time.deltaTime * slopeSpeed;
-            transform.rotation = Quaternion.Euler(0, _rotationY, _rotationZ);
-        } else if (rotatingLeft) {
-            _rotationY -= Time.deltaTime * rotationSpeed;
-            if (_rotationZ < 15f)
-                _rotationZ += Time.deltaTime * slopeSpeed;
-            transform.rotation = Quaternion.Euler(0, _rotationY, _rotationZ);
-        } else {
-            if (_rotationZ > 0) {
-                _rotationZ -= Time.deltaTime * slopeSpeed;
-            } else if (_rotationZ < 0) {
-                _rotationZ += Time.deltaTime * slopeSpeed;
-            }
-            transform.rotation = Quaternion.Euler(0, _rotationY, _rotationZ);
-        }
+    public void MoveToInput(Vector2 input) {
+        _rb.velocity = transform.forward * movementSpeed;
+        _rb.transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.LookRotation(new Vector3(input.x, 0, input.y)), Time.fixedDeltaTime * rotationSpeed);
     }
 
 }

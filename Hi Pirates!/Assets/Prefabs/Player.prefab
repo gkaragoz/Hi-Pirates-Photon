@@ -21,7 +21,10 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4269038090743393613}
+  - component: {fileID: 1824133859219772441}
+  - component: {fileID: 7122047854654556818}
   - component: {fileID: 4269038090743393602}
+  - component: {fileID: 4235219374536194792}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -46,6 +49,33 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1824133859219772441
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4269038090743393612}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0641c4a82b30c284c822c996dc6e4047, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _joystick: {fileID: 0}
+  _xInput: 0
+  _yInput: 0
+--- !u!114 &7122047854654556818
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4269038090743393612}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2bf2dea356ffdb04888a895c60f03441, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &4269038090743393602
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -58,12 +88,24 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f18c3fe3cabd5f047bd287d4c22d978d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  goForward: 1
-  rotatingRight: 0
-  rotatingLeft: 0
-  movementSpeed: 1
-  rotationSpeed: 60
-  slopeSpeed: 15
+  movementSpeed: 3
+  rotationSpeed: 0.3
+--- !u!54 &4235219374536194792
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4269038090743393612}
+  serializedVersion: 2
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_UseGravity: 0
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
 --- !u!1001 &1244563795582040343
 PrefabInstance:
   m_ObjectHideFlags: 0
