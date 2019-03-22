@@ -9,8 +9,6 @@ public class RoomProperty : MonoBehaviour {
     [SerializeField]
     private TextMeshProUGUI _txtCountOfPlayers;
 
-    private int _cache = -1;
-
     private void Update() {
         if (PhotonNetwork.IsConnectedAndReady) {
             _txtCountOfRooms.text = "Active Rooms:" + PhotonNetwork.CountOfRooms;
