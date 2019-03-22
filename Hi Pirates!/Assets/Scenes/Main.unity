@@ -2826,21 +2826,11 @@ PrefabInstance:
       propertyPath: m_Mesh
       value: 
       objectReference: {fileID: 1969013377}
-    - target: {fileID: 4269038090743393602, guid: 5b0ef13502a0bf7478b2d2f0533174e8,
-        type: 3}
-      propertyPath: rotationSpeed
-      value: 1.75
-      objectReference: {fileID: 0}
     - target: {fileID: 1824133859219772441, guid: 5b0ef13502a0bf7478b2d2f0533174e8,
         type: 3}
       propertyPath: _joystick
       value: 
       objectReference: {fileID: 957754949}
-    - target: {fileID: 4235219374536194792, guid: 5b0ef13502a0bf7478b2d2f0533174e8,
-        type: 3}
-      propertyPath: m_Drag
-      value: 1
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 5b0ef13502a0bf7478b2d2f0533174e8, type: 3}
 --- !u!1 &4269038090343209602 stripped
