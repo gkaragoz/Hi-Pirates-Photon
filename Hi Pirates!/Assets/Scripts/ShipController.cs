@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 [RequireComponent(typeof(ShipMotor))]
 public class ShipController : MonoBehaviour {
@@ -13,6 +11,10 @@ public class ShipController : MonoBehaviour {
 
     public void MoveToInput(Vector2 input) {
         _shipMotor.MoveToInput(input);
+    }
+
+    public void Stop() {
+        _shipMotor.Stop();
     }
 
 }
