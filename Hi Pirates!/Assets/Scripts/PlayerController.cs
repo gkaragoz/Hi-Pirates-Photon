@@ -33,17 +33,11 @@ public class PlayerController : MonoBehaviour {
 
         if (HasInput) {
             Move();
-        } else {
-            Stop();
         }
     }
 
     public void Move() {
         _shipController.MoveToInput(CurrentInput);
-    }
-
-    public void Stop() {
-        _shipController.Stop();
     }
 
     public void Destroy() {

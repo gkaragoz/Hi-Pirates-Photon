@@ -13,8 +13,4 @@ public class ShipController : MonoBehaviour {
         _shipMotor.MoveToInput(input);
     }
 
-    public void Stop() {
-        _shipMotor.Stop();
-    }
-
 }
