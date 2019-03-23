@@ -1,16 +1,19 @@
-﻿using System.Collections;
+﻿using Photon.Pun;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerController : MonoBehaviour {
-
-    [SerializeField]
+public class PlayerController : MonoBehaviour
+{
     private Joystick _joystick;
 
     public Vector2 CurrentInput { get; set; }
+    private PhotonView _photonView { get; set; }
 
-    public bool HasInput {
-        get {
+    public bool HasInput
+    {
+        get
+        {
             return (CurrentInput != Vector2.zero) ? true : false;
         }
     }
@@ -21,26 +24,44 @@ public class PlayerController : MonoBehaviour {
     private float _xInput, _yInput;
     private ShipController _shipController;
 
-    private void Awake() {
+    private void Awake()
+    {
+        _photonView = GetComponent<PhotonView>();
         _shipController = GetComponent<ShipController>();
+        _joystick = GameObject.Find("Fixed Joystick").GetComponent<Joystick>();
+
+        if (!_photonView.IsMine)
+        {
+            Destroy(_joystick.gameObject);
+        }
     }
 
-    private void Update() {
+    private void Update()
+    {
+
+        if (!_photonView.IsMine)
+        {
+            return;
+        }
+
         _xInput = _joystick.Horizontal;
         _yInput = _joystick.Vertical;
 
         CurrentInput = new Vector2(_xInput, _yInput);
 
-        if (HasInput) {
+        if (HasInput)
+        {
             Move();
         }
     }
 
-    public void Move() {
+    public void Move()
+    {
         _shipController.MoveToInput(CurrentInput);
     }
 
-    public void Destroy() {
+    public void Destroy()
+    {
         Destroy(this.gameObject);
     }
 
