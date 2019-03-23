@@ -188,6 +188,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _joystick: {fileID: 8867126195039631883}
+  _HUD: {fileID: 3274841571618117433}
   _xInput: 0
   _yInput: 0
 --- !u!114 &7122047854654556818

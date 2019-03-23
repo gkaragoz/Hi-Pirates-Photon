@@ -5,6 +5,8 @@ public class PlayerController : MonoBehaviour {
 
     [SerializeField]
     private Joystick _joystick;
+    [SerializeField]
+    private GameObject _HUD;
 
     public Vector2 CurrentInput { get; set; }
     private PhotonView _photonView { get; set; }
@@ -26,7 +28,7 @@ public class PlayerController : MonoBehaviour {
         _shipController = GetComponent<ShipController>();
 
         if (!_photonView.IsMine) {
-            Destroy(_joystick.gameObject);
+            Destroy(_HUD.gameObject);
         }
     }
 
