@@ -13,7 +13,7 @@ public class ShipMotor : MonoBehaviour {
 
     public void MoveToInput(Vector2 input) {
         _rb.velocity = transform.forward * movementSpeed * input.magnitude;
-        _rb.transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.LookRotation(new Vector3(input.x, 0, input.y)), Time.deltaTime * rotationSpeed);
+        _rb.MoveRotation(Quaternion.Lerp(transform.rotation, Quaternion.LookRotation(new Vector3(input.x, 0, input.y)), Time.deltaTime * rotationSpeed));
     }
 
 }
