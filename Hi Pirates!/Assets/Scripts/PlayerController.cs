@@ -29,6 +29,8 @@ public class PlayerController : MonoBehaviour {
 
         if (!_photonView.IsMine) {
             Destroy(_HUD.gameObject);
+        } else {
+            Camera.main.GetComponent<CameraController>().SetTarget(this.transform);
         }
     }
 
