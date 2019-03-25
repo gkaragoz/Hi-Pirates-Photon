@@ -370,6 +370,7 @@ GameObject:
   - component: {fileID: 1824133859219772441}
   - component: {fileID: 7122047854654556818}
   - component: {fileID: 4269038090743393602}
+  - component: {fileID: 8540951910867248603}
   - component: {fileID: 1360998035968151244}
   - component: {fileID: 7711078398133933380}
   - component: {fileID: 5046085015534033441}
@@ -457,6 +458,21 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   movementSpeed: 3
   rotationSpeed: 1.75
+--- !u!114 &8540951910867248603
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4269038090743393612}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5c239ccc7ab5cc549ba8eb441424823f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _shipDefinition_Template: {fileID: 11400000, guid: ff5e754d99cf31c44bad5bc71d846cf7,
+    type: 2}
+  _ship: {fileID: 0}
 --- !u!114 &1360998035968151244
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -677,6 +693,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 4269038090743393613}
     m_Modifications:
+    - target: {fileID: 100034, guid: f9a90889d1589974f9fdb36e7805713c, type: 3}
+      propertyPath: m_Name
+      value: ship_light
+      objectReference: {fileID: 0}
     - target: {fileID: 400034, guid: f9a90889d1589974f9fdb36e7805713c, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -721,10 +741,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 100034, guid: f9a90889d1589974f9fdb36e7805713c, type: 3}
-      propertyPath: m_Name
-      value: ship_light
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f9a90889d1589974f9fdb36e7805713c, type: 3}
 --- !u!4 &4919674975074393808 stripped
@@ -740,6 +756,20 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 3727133628387203699}
     m_Modifications:
+    - target: {fileID: 1605939441684070, guid: ce5089f3caa5bb042a4d4c23a427bc82, type: 3}
+      propertyPath: m_Name
+      value: Fixed Joystick
+      objectReference: {fileID: 0}
+    - target: {fileID: 114859346367353968, guid: ce5089f3caa5bb042a4d4c23a427bc82,
+        type: 3}
+      propertyPath: background
+      value: 
+      objectReference: {fileID: 8757914819383727861}
+    - target: {fileID: 114859346367353968, guid: ce5089f3caa5bb042a4d4c23a427bc82,
+        type: 3}
+      propertyPath: handle
+      value: 
+      objectReference: {fileID: 8758058858116506199}
     - target: {fileID: 224070147403872398, guid: ce5089f3caa5bb042a4d4c23a427bc82,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -845,25 +875,11 @@ PrefabInstance:
       propertyPath: m_Pivot.y
       value: 0.5
       objectReference: {fileID: 0}
-    - target: {fileID: 1605939441684070, guid: ce5089f3caa5bb042a4d4c23a427bc82, type: 3}
-      propertyPath: m_Name
-      value: Fixed Joystick
-      objectReference: {fileID: 0}
-    - target: {fileID: 114859346367353968, guid: ce5089f3caa5bb042a4d4c23a427bc82,
-        type: 3}
-      propertyPath: background
-      value: 
-      objectReference: {fileID: 8757914819383727861}
-    - target: {fileID: 114859346367353968, guid: ce5089f3caa5bb042a4d4c23a427bc82,
-        type: 3}
-      propertyPath: handle
-      value: 
-      objectReference: {fileID: 8758058858116506199}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ce5089f3caa5bb042a4d4c23a427bc82, type: 3}
---- !u!224 &8758058858116506199 stripped
+--- !u!224 &8757914819383727861 stripped
 RectTransform:
-  m_CorrespondingSourceObject: {fileID: 224251571662654508, guid: ce5089f3caa5bb042a4d4c23a427bc82,
+  m_CorrespondingSourceObject: {fileID: 224070147403872398, guid: ce5089f3caa5bb042a4d4c23a427bc82,
     type: 3}
   m_PrefabInstance: {fileID: 8833339789588164219}
   m_PrefabAsset: {fileID: 0}
@@ -879,9 +895,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cecce8d3f549de045bea5fd79de9e7cb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!224 &8757914819383727861 stripped
+--- !u!224 &8758058858116506199 stripped
 RectTransform:
-  m_CorrespondingSourceObject: {fileID: 224070147403872398, guid: ce5089f3caa5bb042a4d4c23a427bc82,
+  m_CorrespondingSourceObject: {fileID: 224251571662654508, guid: ce5089f3caa5bb042a4d4c23a427bc82,
     type: 3}
   m_PrefabInstance: {fileID: 8833339789588164219}
   m_PrefabAsset: {fileID: 0}
