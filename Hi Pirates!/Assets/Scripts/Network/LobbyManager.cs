@@ -93,7 +93,11 @@ public class LobbyManager : MonoBehaviourPunCallbacks
 
     public override void OnPlayerPropertiesUpdate(Player targetPlayer, Hashtable changedProps)
     {
-
+        if (changedProps.ContainsKey(GameVariables.PLAYER_HEALTH_FIELD))
+        {
+            //check if owned ship has been died 
+            return;
+        }
     }
 
     #endregion

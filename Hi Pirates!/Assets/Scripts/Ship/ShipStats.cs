@@ -1,4 +1,7 @@
-﻿using UnityEngine;
+﻿using ExitGames.Client.Photon;
+using Photon.Pun;
+using Photon.Realtime;
+using UnityEngine;
 
 public class ShipStats : MonoBehaviour {
 
@@ -11,6 +14,10 @@ public class ShipStats : MonoBehaviour {
     [Utils.ReadOnly]
     private ShipStats_SO _ship;
 
+    [Header("Debug")]
+    [SerializeField]
+    [Utils.ReadOnly]
+    public Player Owner;
     #region Initializations
 
     private void Awake() {
@@ -22,6 +29,10 @@ public class ShipStats : MonoBehaviour {
     #endregion
 
     public void Initialize() {
+        Hashtable props = new Hashtable() { { GameVariables.PLAYER_HEALTH_FIELD, GameVariables.DEFAULT_PLAYER_HEALTH } };
+
+        Owner.SetCustomProperties(props);
+
         //_char.Name = networkObject.PlayerData.Name;
 
         //_char.CurrentHealth = networkObject.PlayerData.CurrentHp;
@@ -41,11 +52,14 @@ public class ShipStats : MonoBehaviour {
     #region Stat Increasers
 
     public void ApplyHealth(int healthAmount) {
+
         if ((_ship.CurrentHealth + healthAmount) > _ship.MaxHealth) {
             _ship.CurrentHealth = _ship.MaxHealth;
         } else {
             _ship.CurrentHealth += healthAmount;
         }
+        Hashtable props = new Hashtable() { { GameVariables.PLAYER_HEALTH_FIELD, _ship.CurrentHealth } };
+        Owner.SetCustomProperties(props);
     }
 
     public void AddAttackDamage(int damageAmount) {
@@ -87,6 +101,8 @@ public class ShipStats : MonoBehaviour {
         if (_ship.CurrentHealth <= 0) {
             _ship.CurrentHealth = 0;
         }
+        Hashtable props = new Hashtable() { { GameVariables.PLAYER_HEALTH_FIELD, _ship.CurrentHealth } };
+        Owner.SetCustomProperties(props);
     }
 
     public void ReduceAttackDamage(int damageAmount) {

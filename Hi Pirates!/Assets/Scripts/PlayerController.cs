@@ -26,10 +26,11 @@ public class PlayerController : MonoBehaviour {
     private void Awake() {
         _photonView = GetComponent<PhotonView>();
         _shipController = GetComponent<ShipController>();
-
+        
         if (!_photonView.IsMine) {
             Destroy(_HUD.gameObject);
         } else {
+            _shipController.SetOwner(_photonView.Owner);
             Camera.main.GetComponent<CameraController>().SetTarget(this.transform);
         }
     }
