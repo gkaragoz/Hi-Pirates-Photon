@@ -478,6 +478,8 @@ MonoBehaviour:
   _isFireLeftCharging: 0
   _fireRightChargeTime: 0
   _fireLeftChargeTime: 0
+  _fireRightChargeAmount: 0
+  _fireLeftChargeAmount: 0
 --- !u!114 &8540951910867248603
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -789,7 +791,7 @@ PrefabInstance:
     - target: {fileID: 4400322299621829101, guid: b0978eb365e965f4f8638378ed17ce61,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4400322299621829101, guid: b0978eb365e965f4f8638378ed17ce61,
         type: 3}
