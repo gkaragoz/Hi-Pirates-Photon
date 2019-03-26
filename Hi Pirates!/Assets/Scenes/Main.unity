@@ -512,8 +512,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 69b32f96e61bfe141b41ec922aa0306b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  velocity: 5
-  angle: 45
+  velocity: 10
+  angle: 60
   resolution: 10
 --- !u!120 &241527563
 LineRenderer:
@@ -608,7 +608,7 @@ LineRenderer:
     textureMode: 0
     shadowBias: 0.5
     generateLightingData: 0
-  m_UseWorldSpace: 1
+  m_UseWorldSpace: 0
   m_Loop: 0
 --- !u!4 &241527564
 Transform:
