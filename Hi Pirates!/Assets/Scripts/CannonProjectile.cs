@@ -8,6 +8,7 @@ public class CannonProjectile : MonoBehaviour {
     private void OnTriggerEnter(Collider other) {
         if (other.tag == "Water") {
             Instantiate(_waterSplashFX, new Vector3(transform.position.x, 0f, transform.position.z), Quaternion.identity);
+            Destroy(this.gameObject);
         }    
     }
 

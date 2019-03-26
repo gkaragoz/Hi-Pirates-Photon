@@ -8,6 +8,12 @@ public class ShipAttack : MonoBehaviour {
     [SerializeField]
     private LaunchArcRenderer _launchArcRenderer;
     [SerializeField]
+    private GameObject _cannonFireFX;
+    [SerializeField]
+    private GameObject _rightCannon;
+    [SerializeField]
+    private GameObject _leftCannon;
+    [SerializeField]
     private float _chargeThreshold = 0.2f;
 
     private ShipStats _shipStats;
@@ -95,6 +101,7 @@ public class ShipAttack : MonoBehaviour {
         Rigidbody projectile = Instantiate(_cannonProjectile, _launchArcRenderer.transform.position, Quaternion.identity).GetComponent<Rigidbody>();
         projectile.AddForce(_launchArcRenderer.GetForceVector() * _shipStats.GetAttackRange() * _fireRightChargeAmount, ForceMode.VelocityChange);
 
+        Instantiate(_cannonFireFX, _rightCannon.transform.position, Quaternion.AngleAxis(transform.localRotation.y + 90, Vector3.up));
         _launchArcRenderer.SetVisibility(false);
     }
 
@@ -102,6 +109,7 @@ public class ShipAttack : MonoBehaviour {
         Rigidbody projectile = Instantiate(_cannonProjectile, _launchArcRenderer.transform.position, Quaternion.identity).GetComponent<Rigidbody>();
         projectile.AddForce(_launchArcRenderer.GetForceVector() * _shipStats.GetAttackRange() * _fireLeftChargeAmount, ForceMode.VelocityChange);
 
+        Instantiate(_cannonFireFX, _leftCannon.transform.position, Quaternion.AngleAxis(transform.localRotation.y - 90, Vector3.up));
         _launchArcRenderer.SetVisibility(false);
     }
 
