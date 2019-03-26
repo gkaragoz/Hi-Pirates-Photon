@@ -6,7 +6,7 @@ public class ShipAttack : MonoBehaviour
 {
 
     [SerializeField]
-    private CannonProjectile _cannonProjectile;
+    private GameObject _cannonProjectile;
     [SerializeField]
     private LaunchArcRenderer _launchArcRenderer;
     [SerializeField]
@@ -122,8 +122,8 @@ public class ShipAttack : MonoBehaviour
     private void FireRight(PhotonView photonview, float eulerAnglesY, float chargeAmount = 0)
     {
         // Instantiate projectile and add force based on launchArcRenderer.
-        _cannonProjectile.InitializeBullet(_shipStats.Owner);
         Rigidbody projectile = Instantiate(_cannonProjectile, _launchArcRenderer.transform.position, Quaternion.identity).GetComponent<Rigidbody>();
+        _cannonProjectile.GetComponent<CannonProjectile>().InitializeBullet(_shipStats.Owner);
 
         Debug.Log("eulerAngles: " + transform.rotation.eulerAngles.y);
         if (chargeAmount > 0)
@@ -153,8 +153,9 @@ public class ShipAttack : MonoBehaviour
     private void FireLeft(PhotonView photonview, float eulerY, float chargeAmount = 0)
     {
         // Instantiate projectile and add force based on launchArcRenderer.
-        _cannonProjectile.InitializeBullet(_shipStats.Owner);
         Rigidbody projectile = Instantiate(_cannonProjectile, _launchArcRenderer.transform.position, Quaternion.identity).GetComponent<Rigidbody>();
+        _cannonProjectile.GetComponent<CannonProjectile>().InitializeBullet(_shipStats.Owner);
+
         Debug.Log("eulerAngles: " + transform.rotation.eulerAngles.y);
 
         if (chargeAmount > 0)
