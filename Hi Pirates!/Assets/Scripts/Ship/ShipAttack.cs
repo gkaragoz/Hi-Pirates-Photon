@@ -53,6 +53,9 @@ public class ShipAttack : MonoBehaviour {
         if (_fireRightChargeTime >= _shipStats.GetAttackSpeed()) {
             _fireRightChargeTime = _shipStats.GetAttackSpeed();
         }
+
+        float chargeAmount = Mathf.Clamp(_fireRightChargeTime, _chargeThreshold, 1f);
+        RenderArc(_shipStats.GetAttackRange() * chargeAmount, LaunchArcRenderer.Direction.Right);
     }
 
     public void ChargeFireLeft() {
@@ -63,6 +66,9 @@ public class ShipAttack : MonoBehaviour {
         if (_fireLeftChargeTime >= _shipStats.GetAttackSpeed()) {
             _fireLeftChargeTime = _shipStats.GetAttackSpeed();
         }
+
+        float chargeAmount = Mathf.Clamp(_fireLeftChargeTime, _chargeThreshold, 1f);
+        RenderArc(_shipStats.GetAttackRange() * chargeAmount, LaunchArcRenderer.Direction.Left);
     }
 
     public void ReleaseFireRight() {
@@ -77,14 +83,14 @@ public class ShipAttack : MonoBehaviour {
         FireLeft();
     }
 
-    public void FireRight() {
-        float chargeAmount = Mathf.Clamp(_fireRightChargeTime, _chargeThreshold, 1f);
-        _launchArcRenderer.RenderArc(_shipStats.GetAttackRange() * chargeAmount, LaunchArcRenderer.Direction.Right);
+    private void FireRight() {
     }
 
-    public void FireLeft() {
-        float chargeAmount = Mathf.Clamp(_fireLeftChargeTime, _chargeThreshold, 1f);
-        _launchArcRenderer.RenderArc(_shipStats.GetAttackRange() * chargeAmount, LaunchArcRenderer.Direction.Left);
+    private void FireLeft() {
+    }
+
+    private void RenderArc(float velocity, LaunchArcRenderer.Direction direction) {
+        _launchArcRenderer.RenderArc(velocity, direction);
     }
 
 }
