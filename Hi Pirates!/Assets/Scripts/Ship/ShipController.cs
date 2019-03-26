@@ -1,4 +1,5 @@
-﻿using Photon.Realtime;
+﻿using Photon.Pun;
+using Photon.Realtime;
 using UnityEngine;
 
 [RequireComponent(typeof(ShipMotor), typeof(ShipAttack), typeof(ShipStats))]
@@ -30,12 +31,12 @@ public class ShipController : MonoBehaviour {
         _shipAttack.ChargeFireLeft();
     }
 
-    public void ReleaseFireRight() {
-        _shipAttack.ReleaseFireRight();
+    public void ReleaseFireRight(PhotonView photonview, float chargeAmount = 0) {
+        _shipAttack.ReleaseFireRight(photonview, chargeAmount);
     }
 
-    public void ReleaseFireLeft() {
-        _shipAttack.ReleaseFireLeft();
+    public void ReleaseFireLeft(PhotonView photonview, float chargeAmount = 0) {
+        _shipAttack.ReleaseFireLeft(photonview, chargeAmount);
     }
 
 }
