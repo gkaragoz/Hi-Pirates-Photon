@@ -22,7 +22,9 @@ public class ShipStats_SO : ScriptableObject {
     [SerializeField]
     private float _attackSpeed = 1.0f;
     [SerializeField]
-    private float _movementSpeed = 2;
+    private float _movementSpeed = 3;
+    [SerializeField]
+    private float _rotationSpeed = 1.75f;
     [SerializeField]
     private float _attackRange = 1;
 
@@ -114,6 +116,16 @@ public class ShipStats_SO : ScriptableObject {
 
         set {
             _movementSpeed = value;
+        }
+    }
+
+    public float RotationSpeed {
+        get {
+            return _rotationSpeed;
+        }
+
+        set {
+            _rotationSpeed = value;
         }
     }
 

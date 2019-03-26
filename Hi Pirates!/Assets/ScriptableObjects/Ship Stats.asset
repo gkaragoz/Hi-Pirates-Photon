@@ -12,15 +12,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2554d65e8b695314f830c80802247b6e, type: 3}
   m_Name: Ship Stats
   m_EditorClassIdentifier: 
-  isPlayer: 0
+  isPlayer: 1
   _name: 
   _maxHealth: 100
   _currentHealth: 100
   _healthRegen: 1
   _attackDamage: 5
   _attackSpeed: 1
-  _movementSpeed: 2
-  _attackRange: 1
+  _movementSpeed: 3
+  _rotationSpeed: 1.75
+  _attackRange: 10
   _level: 1
   _maxExperience: 100
   _currentExperience: 0

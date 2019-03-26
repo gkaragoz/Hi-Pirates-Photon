@@ -48,10 +48,26 @@ public class PlayerController : MonoBehaviour {
         if (HasInput) {
             Move();
         }
+
+        if (Input.GetKeyDown(KeyCode.KeypadPlus)) {
+            FireRight();
+        }
+
+        if (Input.GetKeyDown(KeyCode.KeypadMinus)) {
+            FireLeft();
+        }
     }
 
     public void Move() {
         _shipController.MoveToInput(CurrentInput);
+    }
+
+    public void FireRight() {
+        _shipController.FireRight(1f);
+    }
+    
+    public void FireLeft() {
+        _shipController.FireLeft(1f);
     }
 
     public void Destroy() {

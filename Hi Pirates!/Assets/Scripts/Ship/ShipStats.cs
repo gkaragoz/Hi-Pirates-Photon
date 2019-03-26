@@ -18,6 +18,7 @@ public class ShipStats : MonoBehaviour {
     [SerializeField]
     [Utils.ReadOnly]
     public Player Owner;
+
     #region Initializations
 
     private void Awake() {
@@ -167,6 +168,10 @@ public class ShipStats : MonoBehaviour {
 
     public float GetMovementSpeed() {
         return _ship.MovementSpeed;
+    }
+
+    public float GetRotationSpeed() {
+        return _ship.RotationSpeed;
     }
 
     public float GetAttackRange() {
