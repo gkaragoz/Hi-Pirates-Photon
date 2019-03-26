@@ -43,21 +43,21 @@ public class PlayerController : MonoBehaviour
     }
 
     [PunRPC]
-    public void FireRight(float chargeTime, Quaternion rot, PhotonMessageInfo info)
+    public void FireRight(float chargeTime, float eulerY, PhotonMessageInfo info)
     {
         //float lag = (float)(PhotonNetwork.Time - info.SentServerTime);
         if (!_photonView.IsMine)
         {
-            _shipController.ReleaseFireRight(_photonView, rot, chargeTime);
+            _shipController.ReleaseFireRight(_photonView, eulerY, chargeTime);
         }
     }
     [PunRPC]
-    public void FireLeft(float chargeTime, Quaternion rot, PhotonMessageInfo info)
+    public void FireLeft(float chargeTime, float eulerY, PhotonMessageInfo info)
     {
         //float lag = (float)(PhotonNetwork.Time - info.SentServerTime);
         if (!_photonView.IsMine)
         {
-            _shipController.ReleaseFireLeft(_photonView, rot, chargeTime);
+            _shipController.ReleaseFireLeft(_photonView, eulerY, chargeTime);
         }
 
     }
@@ -116,12 +116,12 @@ public class PlayerController : MonoBehaviour
 
     public void ReleaseFireRight()
     {
-        _shipController.ReleaseFireRight(_photonView, transform.rotation);
+        _shipController.ReleaseFireRight(_photonView, transform.rotation.eulerAngles.y);
     }
 
     public void ReleaseFireLeft()
     {
-        _shipController.ReleaseFireRight(_photonView, transform.rotation);
+        _shipController.ReleaseFireRight(_photonView, transform.rotation.eulerAngles.y);
     }
 
     public void Destroy()
