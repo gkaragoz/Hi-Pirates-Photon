@@ -43,8 +43,9 @@ public class LaunchArcRenderer : MonoBehaviour {
     }
 
     // Calculate start force vector to apply any objects.
-    public Vector3 GetForceVector() {
-        return new Vector3(Mathf.Cos(_radianAngle), Mathf.Sin(_radianAngle), 0);
+    public Vector3 GetForceVector(Quaternion parentQuaternion) {
+        Vector3 forceVector = Quaternion.Euler(0f, parentQuaternion.eulerAngles.y, 0f) * new Vector3(Mathf.Cos(_radianAngle), Mathf.Sin(_radianAngle), 0);
+        return forceVector;
     }
 
     // Populating the lineRenderer with the appropriate settings.

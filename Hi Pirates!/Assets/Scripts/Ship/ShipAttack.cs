@@ -99,17 +99,17 @@ public class ShipAttack : MonoBehaviour {
 
     private void FireRight() {
         Rigidbody projectile = Instantiate(_cannonProjectile, _launchArcRenderer.transform.position, Quaternion.identity).GetComponent<Rigidbody>();
-        projectile.AddForce(_launchArcRenderer.GetForceVector() * _shipStats.GetAttackRange() * _fireRightChargeAmount, ForceMode.VelocityChange);
+        projectile.AddForce(_launchArcRenderer.GetForceVector(transform.rotation) * _shipStats.GetAttackRange() * _fireRightChargeAmount, ForceMode.VelocityChange);
 
-        Instantiate(_cannonFireFX, _rightCannon.transform.position, Quaternion.AngleAxis(transform.localRotation.y + 90, Vector3.up));
+        Instantiate(_cannonFireFX, _rightCannon.transform.position, Quaternion.AngleAxis(transform.rotation.eulerAngles.y + 90, Vector3.up));
         _launchArcRenderer.SetVisibility(false);
     }
 
     private void FireLeft() {
         Rigidbody projectile = Instantiate(_cannonProjectile, _launchArcRenderer.transform.position, Quaternion.identity).GetComponent<Rigidbody>();
-        projectile.AddForce(_launchArcRenderer.GetForceVector() * _shipStats.GetAttackRange() * _fireLeftChargeAmount, ForceMode.VelocityChange);
+        projectile.AddForce(_launchArcRenderer.GetForceVector(transform.rotation) * _shipStats.GetAttackRange() * _fireLeftChargeAmount, ForceMode.VelocityChange);
 
-        Instantiate(_cannonFireFX, _leftCannon.transform.position, Quaternion.AngleAxis(transform.localRotation.y - 90, Vector3.up));
+        Instantiate(_cannonFireFX, _leftCannon.transform.position, Quaternion.AngleAxis(transform.rotation.eulerAngles.y - 90, Vector3.up));
         _launchArcRenderer.SetVisibility(false);
     }
 
