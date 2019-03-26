@@ -49,12 +49,20 @@ public class PlayerController : MonoBehaviour {
             Move();
         }
 
-        if (Input.GetKeyDown(KeyCode.KeypadPlus)) {
-            FireRight();
+        if (Input.GetKey(KeyCode.KeypadPlus)) {
+            ChargeFireRight();
         }
 
-        if (Input.GetKeyDown(KeyCode.KeypadMinus)) {
-            FireLeft();
+        if (Input.GetKeyUp(KeyCode.KeypadPlus)) {
+            ReleaseFireRight();
+        }
+
+        if (Input.GetKey(KeyCode.KeypadMinus)) {
+            ChargeFireLeft();
+        }
+
+        if (Input.GetKeyUp(KeyCode.KeypadMinus)) {
+            ReleaseFireLeft();
         }
     }
 
@@ -62,12 +70,20 @@ public class PlayerController : MonoBehaviour {
         _shipController.MoveToInput(CurrentInput);
     }
 
-    public void FireRight() {
-        _shipController.FireRight(1f);
+    public void ChargeFireRight() {
+        _shipController.ChargeFireRight();
     }
     
-    public void FireLeft() {
-        _shipController.FireLeft(1f);
+    public void ChargeFireLeft() {
+        _shipController.ChargeFireLeft();
+    }
+
+    public void ReleaseFireRight() {
+        _shipController.ReleaseFireRight();
+    }
+    
+    public void ReleaseFireLeft() {
+        _shipController.ReleaseFireLeft();
     }
 
     public void Destroy() {

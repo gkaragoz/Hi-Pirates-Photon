@@ -471,6 +471,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _launchArcRenderer: {fileID: 4009795192507046324}
+  _chargeThreshold: 0.5
+  _isFireRightCharging: 0
+  _isFireLeftCharging: 0
+  _fireRightChargeTime: 0
+  _fireLeftChargeTime: 0
 --- !u!114 &8540951910867248603
 MonoBehaviour:
   m_ObjectHideFlags: 0

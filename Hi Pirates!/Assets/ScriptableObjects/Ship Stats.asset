@@ -18,7 +18,7 @@ MonoBehaviour:
   _currentHealth: 100
   _healthRegen: 1
   _attackDamage: 5
-  _attackSpeed: 1
+  _attackSpeed: 3
   _movementSpeed: 3
   _rotationSpeed: 1.75
   _attackRange: 10

@@ -22,12 +22,20 @@ public class ShipController : MonoBehaviour {
         _shipStats.Owner = player;
     }
 
-    public void FireRight(float chargeAmount) {
-        _shipAttack.FireRight(chargeAmount);
+    public void ChargeFireRight() {
+        _shipAttack.ChargeFireRight();
     }
 
-    public void FireLeft(float chargeAmount) {
-        _shipAttack.FireLeft(chargeAmount);
+    public void ChargeFireLeft() {
+        _shipAttack.ChargeFireLeft();
+    }
+
+    public void ReleaseFireRight() {
+        _shipAttack.ReleaseFireRight();
+    }
+
+    public void ReleaseFireLeft() {
+        _shipAttack.ReleaseFireLeft();
     }
 
 }
