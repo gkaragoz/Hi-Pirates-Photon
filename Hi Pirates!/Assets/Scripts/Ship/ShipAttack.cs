@@ -4,6 +4,8 @@
 public class ShipAttack : MonoBehaviour {
 
     [SerializeField]
+    private GameObject _cannonProjectile;
+    [SerializeField]
     private LaunchArcRenderer _launchArcRenderer;
     [SerializeField]
     private float _chargeThreshold = 0.2f;
@@ -22,6 +24,12 @@ public class ShipAttack : MonoBehaviour {
     [SerializeField]
     [Utils.ReadOnly]
     private float _fireLeftChargeTime = 0;
+    [SerializeField]
+    [Utils.ReadOnly]
+    private float _fireRightChargeAmount = 0;
+    [SerializeField]
+    [Utils.ReadOnly]
+    private float _fireLeftChargeAmount = 0;
 
     private void Awake() {
         _shipStats = GetComponent<ShipStats>();
@@ -54,8 +62,8 @@ public class ShipAttack : MonoBehaviour {
             _fireRightChargeTime = _shipStats.GetAttackSpeed();
         }
 
-        float chargeAmount = Mathf.Clamp(_fireRightChargeTime, _chargeThreshold, 1f);
-        RenderArc(_shipStats.GetAttackRange() * chargeAmount, LaunchArcRenderer.Direction.Right);
+        _fireRightChargeAmount = Mathf.Clamp(_fireRightChargeTime, _chargeThreshold, 1f);
+        RenderArc(_shipStats.GetAttackRange() * _fireRightChargeAmount, LaunchArcRenderer.Direction.Right);
     }
 
     public void ChargeFireLeft() {
@@ -67,8 +75,8 @@ public class ShipAttack : MonoBehaviour {
             _fireLeftChargeTime = _shipStats.GetAttackSpeed();
         }
 
-        float chargeAmount = Mathf.Clamp(_fireLeftChargeTime, _chargeThreshold, 1f);
-        RenderArc(_shipStats.GetAttackRange() * chargeAmount, LaunchArcRenderer.Direction.Left);
+        _fireLeftChargeAmount = Mathf.Clamp(_fireLeftChargeTime, _chargeThreshold, 1f);
+        RenderArc(_shipStats.GetAttackRange() * _fireLeftChargeAmount, LaunchArcRenderer.Direction.Left);
     }
 
     public void ReleaseFireRight() {
@@ -84,12 +92,21 @@ public class ShipAttack : MonoBehaviour {
     }
 
     private void FireRight() {
+        Rigidbody projectile = Instantiate(_cannonProjectile, _launchArcRenderer.transform.position, Quaternion.identity).GetComponent<Rigidbody>();
+        projectile.AddForce(_launchArcRenderer.GetForceVector() * _shipStats.GetAttackRange() * _fireRightChargeAmount, ForceMode.VelocityChange);
+
+        _launchArcRenderer.SetVisibility(false);
     }
 
     private void FireLeft() {
+        Rigidbody projectile = Instantiate(_cannonProjectile, _launchArcRenderer.transform.position, Quaternion.identity).GetComponent<Rigidbody>();
+        projectile.AddForce(_launchArcRenderer.GetForceVector() * _shipStats.GetAttackRange() * _fireLeftChargeAmount, ForceMode.VelocityChange);
+
+        _launchArcRenderer.SetVisibility(false);
     }
 
     private void RenderArc(float velocity, LaunchArcRenderer.Direction direction) {
+        _launchArcRenderer.SetVisibility(true);
         _launchArcRenderer.RenderArc(velocity, direction);
     }
 

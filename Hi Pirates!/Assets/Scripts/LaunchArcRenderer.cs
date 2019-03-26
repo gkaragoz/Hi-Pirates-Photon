@@ -37,6 +37,16 @@ public class LaunchArcRenderer : MonoBehaviour {
         }
     }
 
+    // Show lineRenderer.
+    public void SetVisibility(bool visibility) {
+        _lr.enabled = visibility;
+    }
+
+    // Calculate start force vector to apply any objects.
+    public Vector3 GetForceVector() {
+        return new Vector3(Mathf.Cos(_radianAngle), Mathf.Sin(_radianAngle), 0);
+    }
+
     // Populating the lineRenderer with the appropriate settings.
     public void RenderArc(float velocity, Direction direction) {
         _lr.positionCount = resolution + 1;

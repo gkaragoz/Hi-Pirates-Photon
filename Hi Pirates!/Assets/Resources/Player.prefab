@@ -470,6 +470,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5aea7dcbc0cb2bf43810743d0134504c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _cannonProjectile: {fileID: 6102212082353032812, guid: 39bee8ef314943141b7ef057e73a9725,
+    type: 3}
   _launchArcRenderer: {fileID: 4009795192507046324}
   _chargeThreshold: 0.5
   _isFireRightCharging: 0
