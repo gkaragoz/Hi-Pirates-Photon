@@ -30,7 +30,7 @@ public class PlayerController : MonoBehaviour {
         if (!_photonView.IsMine) {
             Destroy(_HUD.gameObject);
         } else {
-            _shipController.SetOwner(_photonView.Owner);
+            //_shipController.SetOwner(_photonView.Owner);
             Camera.main.GetComponent<CameraController>().SetTarget(this.transform);
         }
     }
