@@ -35,6 +35,22 @@ public class PlayerController : MonoBehaviour {
         }
     }
 
+    [PunRPC]
+    public void FireRight(int test, PhotonMessageInfo info)
+    {
+        //float lag = (float)(PhotonNetwork.Time - info.SentServerTime);
+
+        _shipController.ReleaseFireRight();
+
+    }
+    [PunRPC]
+    public void FireLeft(int test, PhotonMessageInfo info)
+    {
+        //float lag = (float)(PhotonNetwork.Time - info.SentServerTime);
+ 
+        _shipController.ReleaseFireLeft();
+
+    }
     private void Update() {
         if (!_photonView.IsMine) {
             return;
@@ -79,11 +95,13 @@ public class PlayerController : MonoBehaviour {
     }
 
     public void ReleaseFireRight() {
-        _shipController.ReleaseFireRight();
+        _photonView.RPC("FireRight", RpcTarget.AllViaServer, 0);
+        //_shipController.ReleaseFireRight();
     }
     
     public void ReleaseFireLeft() {
-        _shipController.ReleaseFireLeft();
+        _photonView.RPC("FireLeft", RpcTarget.AllViaServer, 0);
+        //_shipController.ReleaseFireLeft();
     }
 
     public void Destroy() {

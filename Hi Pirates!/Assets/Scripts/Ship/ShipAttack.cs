@@ -4,7 +4,7 @@
 public class ShipAttack : MonoBehaviour {
 
     [SerializeField]
-    private GameObject _cannonProjectile;
+    private CannonProjectile _cannonProjectile;
     [SerializeField]
     private LaunchArcRenderer _launchArcRenderer;
     [SerializeField]
@@ -107,7 +107,9 @@ public class ShipAttack : MonoBehaviour {
 
     private void FireRight() {
         // Instantiate projectile and add force based on launchArcRenderer.
+        _cannonProjectile.InitializeBullet(_shipStats.Owner);
         Rigidbody projectile = Instantiate(_cannonProjectile, _launchArcRenderer.transform.position, Quaternion.identity).GetComponent<Rigidbody>();
+
         projectile.AddForce(_launchArcRenderer.GetForceVector(transform.rotation) * _shipStats.GetAttackRange() * _fireRightChargeAmount, ForceMode.VelocityChange);
 
         // Instantiate cannon fire FX.
@@ -119,6 +121,7 @@ public class ShipAttack : MonoBehaviour {
 
     private void FireLeft() {
         // Instantiate projectile and add force based on launchArcRenderer.
+        _cannonProjectile.InitializeBullet(_shipStats.Owner);
         Rigidbody projectile = Instantiate(_cannonProjectile, _launchArcRenderer.transform.position, Quaternion.identity).GetComponent<Rigidbody>();
         projectile.AddForce(_launchArcRenderer.GetForceVector(transform.rotation) * _shipStats.GetAttackRange() * _fireLeftChargeAmount, ForceMode.VelocityChange);
 

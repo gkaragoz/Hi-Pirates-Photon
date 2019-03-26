@@ -470,7 +470,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5aea7dcbc0cb2bf43810743d0134504c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _cannonProjectile: {fileID: 6102212082353032812, guid: 39bee8ef314943141b7ef057e73a9725,
+  _cannonProjectile: {fileID: 710151107957389588, guid: 39bee8ef314943141b7ef057e73a9725,
     type: 3}
   _launchArcRenderer: {fileID: 4009795192507046324}
   _cannonFireFX: {fileID: 1300557627226918, guid: 26a547904d697114d97cc5e06deec94a,
@@ -885,6 +885,16 @@ PrefabInstance:
       propertyPath: m_Name
       value: Fixed Joystick
       objectReference: {fileID: 0}
+    - target: {fileID: 114859346367353968, guid: ce5089f3caa5bb042a4d4c23a427bc82,
+        type: 3}
+      propertyPath: background
+      value: 
+      objectReference: {fileID: 8757914819383727861}
+    - target: {fileID: 114859346367353968, guid: ce5089f3caa5bb042a4d4c23a427bc82,
+        type: 3}
+      propertyPath: handle
+      value: 
+      objectReference: {fileID: 8758058858116506199}
     - target: {fileID: 224070147403872398, guid: ce5089f3caa5bb042a4d4c23a427bc82,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -990,16 +1000,6 @@ PrefabInstance:
       propertyPath: m_Pivot.y
       value: 0.5
       objectReference: {fileID: 0}
-    - target: {fileID: 114859346367353968, guid: ce5089f3caa5bb042a4d4c23a427bc82,
-        type: 3}
-      propertyPath: background
-      value: 
-      objectReference: {fileID: 8757914819383727861}
-    - target: {fileID: 114859346367353968, guid: ce5089f3caa5bb042a4d4c23a427bc82,
-        type: 3}
-      propertyPath: handle
-      value: 
-      objectReference: {fileID: 8758058858116506199}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ce5089f3caa5bb042a4d4c23a427bc82, type: 3}
 --- !u!224 &8758058858116506199 stripped
