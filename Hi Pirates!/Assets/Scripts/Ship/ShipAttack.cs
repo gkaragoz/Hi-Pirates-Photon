@@ -134,8 +134,8 @@ public class ShipAttack : MonoBehaviour
             photonview.RPC("FireRight", RpcTarget.AllViaServer, _fireRightChargeAmount);
         }
 
-        //projectile.AddForce(_launchArcRenderer.GetForceVector(transform.rotation) * _shipStats.GetAttackRange() * _fireRightChargeAmount, ForceMode.VelocityChange);
-        projectile.AddForce(Vector3.one * _shipStats.GetAttackRange() * _fireRightChargeAmount, ForceMode.VelocityChange);
+        projectile.AddForce(_launchArcRenderer.GetForceVector(transform.rotation) * _shipStats.GetAttackRange() * _fireRightChargeAmount, ForceMode.VelocityChange);
+        //projectile.AddForce(Vector3.one * _shipStats.GetAttackRange() * _fireRightChargeAmount, ForceMode.VelocityChange);
 
         // Instantiate cannon fire FX.
         Instantiate(_cannonFireFX, _rightCannon.transform.position, Quaternion.AngleAxis(transform.rotation.eulerAngles.y + 90, Vector3.up));
@@ -161,9 +161,9 @@ public class ShipAttack : MonoBehaviour
             photonview.RPC("FireLeft", RpcTarget.AllViaServer, _fireLeftChargeAmount);
         }
 
-        //projectile.AddForce(_launchArcRenderer.GetForceVector(transform.rotation) * _shipStats.GetAttackRange() * _fireLeftChargeAmount, ForceMode.VelocityChange);
+        projectile.AddForce(_launchArcRenderer.GetForceVector(transform.rotation) * _shipStats.GetAttackRange() * _fireLeftChargeAmount, ForceMode.VelocityChange);
         // Instantiate cannon fire FX.
-        projectile.AddForce(Vector3.one * _shipStats.GetAttackRange() * _fireLeftChargeAmount, ForceMode.VelocityChange);
+        //projectile.AddForce(Vector3.one * _shipStats.GetAttackRange() * _fireLeftChargeAmount, ForceMode.VelocityChange);
 
         Instantiate(_cannonFireFX, _leftCannon.transform.position, Quaternion.AngleAxis(transform.rotation.eulerAngles.y - 90, Vector3.up));
      
