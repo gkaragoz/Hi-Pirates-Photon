@@ -1,21 +1,16 @@
 ﻿using Photon.Pun;
 using UnityEngine;
 
-public class PlayerController : MonoBehaviour
-{
+public class PlayerController : MonoBehaviour {
 
     [SerializeField]
     private Joystick _joystick;
-    [SerializeField]
-    private GameObject _HUD;
 
     public Vector2 CurrentInput { get; set; }
     private PhotonView _photonView { get; set; }
 
-    public bool HasInput
-    {
-        get
-        {
+    public bool HasInput {
+        get {
             return (CurrentInput != Vector2.zero) ? true : false;
         }
     }
@@ -26,45 +21,35 @@ public class PlayerController : MonoBehaviour
     private float _xInput, _yInput;
     private ShipController _shipController;
 
-    private void Awake()
-    {
+    private ButtonCharger _btnRightFire;
+    private ButtonCharger _btnLeftFire;
+
+    private void Awake() {
         _photonView = GetComponent<PhotonView>();
         _shipController = GetComponent<ShipController>();
 
-        if (!_photonView.IsMine)
-        {
-            Destroy(_HUD.gameObject);
-        }
-        else
-        {
-            //_shipController.SetOwner(_photonView.Owner);
+        if (_photonView.IsMine) {
+            _joystick = FindObjectOfType<Joystick>();
+
+            _btnRightFire = GameObject.Find("BtnRightFire").GetComponent<ButtonCharger>();
+            _btnLeftFire = GameObject.Find("BtnLeftFire").GetComponent<ButtonCharger>();
+
+            _btnRightFire.onCharging += ChargeFireRight;
+            _btnRightFire.onPointerUp += ReleaseFireRight;
+            _btnLeftFire.onCharging += ChargeFireLeft;
+            _btnLeftFire.onPointerUp += ReleaseFireLeft;
+
             Camera.main.GetComponent<CameraController>().SetTarget(this.transform);
         }
     }
 
-    [PunRPC]
-    public void FireRight(float chargeTime, float eulerY, PhotonMessageInfo info)
-    {
-        //float lag = (float)(PhotonNetwork.Time - info.SentServerTime);
-        if (!_photonView.IsMine)
-        {
-            _shipController.ReleaseFireRight(_photonView, eulerY, chargeTime);
-        }
-    }
-    [PunRPC]
-    public void FireLeft(float chargeTime, float eulerY, PhotonMessageInfo info)
-    {
-        //float lag = (float)(PhotonNetwork.Time - info.SentServerTime);
-        if (!_photonView.IsMine)
-        {
-            _shipController.ReleaseFireLeft(_photonView, eulerY, chargeTime);
+    private void Update() {
+        if (!_photonView.IsMine) {
+            return;
         }
 
-    }
-    private void Update()
-    {
-        if (!_photonView.IsMine)
-        {
+        if (_joystick == null) {
+            Debug.Log("Joystick is missing!");
             return;
         }
 
@@ -73,59 +58,48 @@ public class PlayerController : MonoBehaviour
 
         CurrentInput = new Vector2(_xInput, _yInput);
 
-        if (HasInput)
-        {
+        if (HasInput) {
             Move();
         }
 
-        if (Input.GetKey(KeyCode.KeypadPlus))
-        {
+        if (Input.GetKey(KeyCode.KeypadPlus)) {
             ChargeFireRight();
         }
 
-        if (Input.GetKeyUp(KeyCode.KeypadPlus))
-        {
+        if (Input.GetKeyUp(KeyCode.KeypadPlus)) {
             ReleaseFireRight();
         }
 
-        if (Input.GetKey(KeyCode.KeypadMinus))
-        {
+        if (Input.GetKey(KeyCode.KeypadMinus)) {
             ChargeFireLeft();
         }
 
-        if (Input.GetKeyUp(KeyCode.KeypadMinus))
-        {
+        if (Input.GetKeyUp(KeyCode.KeypadMinus)) {
             ReleaseFireLeft();
         }
     }
 
-    public void Move()
-    {
+    public void Move() {
         _shipController.MoveToInput(CurrentInput);
     }
 
-    public void ChargeFireRight()
-    {
+    public void ChargeFireRight() {
         _shipController.ChargeFireRight();
     }
 
-    public void ChargeFireLeft()
-    {
+    public void ChargeFireLeft() {
         _shipController.ChargeFireLeft();
     }
 
-    public void ReleaseFireRight()
-    {
-        _shipController.ReleaseFireRight(_photonView, transform.rotation.eulerAngles.y);
+    public void ReleaseFireRight() {
+        _shipController.ReleaseFireRight();
     }
 
-    public void ReleaseFireLeft()
-    {
-        _shipController.ReleaseFireRight(_photonView, transform.rotation.eulerAngles.y);
+    public void ReleaseFireLeft() {
+        _shipController.ReleaseFireLeft();
     }
 
-    public void Destroy()
-    {
+    public void Destroy() {
         Destroy(this.gameObject);
     }
 

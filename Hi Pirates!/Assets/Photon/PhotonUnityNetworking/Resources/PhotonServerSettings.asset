@@ -34,5 +34,6 @@ MonoBehaviour:
   - RespawnSpaceship
   - FireLeft
   - FireRight
+  - RPC_Fire
   DisableAutoOpenWizard: 1
   ShowSettings: 0

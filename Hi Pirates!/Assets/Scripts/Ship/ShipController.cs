@@ -31,12 +31,12 @@ public class ShipController : MonoBehaviour {
         _shipAttack.ChargeFireLeft();
     }
 
-    public void ReleaseFireRight(PhotonView photonview, float eulerY, float chargeAmount = 0) {
-        _shipAttack.ReleaseFireRight(photonview, eulerY, chargeAmount);
+    public void ReleaseFireRight() {
+        _shipAttack.ReleaseFireRight();
     }
 
-    public void ReleaseFireLeft(PhotonView photonview, float eulerY, float chargeAmount = 0) {
-        _shipAttack.ReleaseFireLeft(photonview, eulerY, chargeAmount);
+    public void ReleaseFireLeft() {
+        _shipAttack.ReleaseFireLeft();
     }
 
 }

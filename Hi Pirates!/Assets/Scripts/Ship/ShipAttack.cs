@@ -2,8 +2,12 @@
 using UnityEngine;
 
 [RequireComponent(typeof(ShipStats))]
-public class ShipAttack : MonoBehaviour
-{
+public class ShipAttack : MonoBehaviour {
+
+    public enum Direction {
+        Right,
+        Left
+    }
 
     [SerializeField]
     private GameObject _cannonProjectile;
@@ -17,6 +21,10 @@ public class ShipAttack : MonoBehaviour
     private GameObject _leftCannon;
     [SerializeField]
     private float _chargeThreshold = 0.2f;
+
+    public Vector3 ProjectileStartPosition { get; private set; }
+    public Vector3 RightCannonPosition { get { return _rightCannon.transform.position; } }
+    public Vector3 LeftCannonPosition { get { return _leftCannon.transform.position; } }
 
     private ShipStats _shipStats;
 
@@ -39,42 +47,37 @@ public class ShipAttack : MonoBehaviour
     [Utils.ReadOnly]
     private float _fireLeftChargeAmount = 0;
 
-    private void Awake()
-    {
+    private PhotonView _photonView;
+
+    private void Awake() {
         _shipStats = GetComponent<ShipStats>();
+        _photonView = GetComponent<PhotonView>();
     }
 
-    private void Update()
-    {
-        if (!_isFireRightCharging && _fireRightChargeTime > 0)
-        {
+    private void Update() {
+        if (!_isFireRightCharging && _fireRightChargeTime > 0) {
             _fireRightChargeTime -= Time.deltaTime;
 
-            if (_fireRightChargeTime < 0)
-            {
+            if (_fireRightChargeTime < 0) {
                 _fireRightChargeTime = 0;
             }
         }
 
-        if (!_isFireLeftCharging && _fireLeftChargeTime > 0)
-        {
+        if (!_isFireLeftCharging && _fireLeftChargeTime > 0) {
             _fireLeftChargeTime -= Time.deltaTime;
 
-            if (_fireLeftChargeTime < 0)
-            {
+            if (_fireLeftChargeTime < 0) {
                 _fireLeftChargeTime = 0;
             }
         }
     }
 
-    public void ChargeFireRight()
-    {
+    public void ChargeFireRight() {
         // Charging...
         _isFireRightCharging = true;
         _fireRightChargeTime += Time.deltaTime;
 
-        if (_fireRightChargeTime >= _shipStats.GetAttackSpeed())
-        {
+        if (_fireRightChargeTime >= _shipStats.GetAttackSpeed()) {
             _fireRightChargeTime = _shipStats.GetAttackSpeed();
         }
 
@@ -84,14 +87,12 @@ public class ShipAttack : MonoBehaviour
         RenderArc(_shipStats.GetAttackRange() * _fireRightChargeAmount, LaunchArcRenderer.Direction.Right);
     }
 
-    public void ChargeFireLeft()
-    {
+    public void ChargeFireLeft() {
         // Charging...
         _isFireLeftCharging = true;
         _fireLeftChargeTime += Time.deltaTime;
 
-        if (_fireLeftChargeTime >= _shipStats.GetAttackSpeed())
-        {
+        if (_fireLeftChargeTime >= _shipStats.GetAttackSpeed()) {
             _fireLeftChargeTime = _shipStats.GetAttackSpeed();
         }
 
@@ -101,87 +102,92 @@ public class ShipAttack : MonoBehaviour
         RenderArc(_shipStats.GetAttackRange() * _fireLeftChargeAmount, LaunchArcRenderer.Direction.Left);
     }
 
-    public void ReleaseFireRight(PhotonView photonview, float eulerY, float chargeAmount = 0)
-    {
+    public void ReleaseFireRight() {
         // Charge released.
         _isFireRightCharging = false;
 
         // Fire!
-        FireRight(photonview, eulerY, chargeAmount);
+        FireRight();
     }
 
-    public void ReleaseFireLeft(PhotonView photonview, float eulerY, float chargeAmount = 0)
-    {
+    public void ReleaseFireLeft() {
         // Charge released.
         _isFireLeftCharging = false;
 
         // Fire!
-        FireLeft(photonview, eulerY, chargeAmount);
+        FireLeft();
     }
 
-    private void FireRight(PhotonView photonview, float eulerAnglesY, float chargeAmount = 0)
-    {
+    private void FireRight() {
+        // Force for apply to projectile.
+        Vector3 force = _launchArcRenderer.GetForceVector(transform.rotation.eulerAngles.y) * _shipStats.GetAttackRange() * _fireRightChargeAmount;
+
+        // Start position about projectile.
+        ProjectileStartPosition = _launchArcRenderer.transform.position;
+
         // Instantiate projectile and add force based on launchArcRenderer.
-        Rigidbody projectile = Instantiate(_cannonProjectile, _launchArcRenderer.transform.position, Quaternion.identity).GetComponent<Rigidbody>();
-        _cannonProjectile.GetComponent<CannonProjectile>().InitializeBullet(_shipStats.Owner);
+        Rigidbody projectile = Instantiate(_cannonProjectile, ProjectileStartPosition, Quaternion.identity).GetComponent<Rigidbody>();
 
-        Debug.Log("eulerAngles: " + transform.rotation.eulerAngles.y);
-        if (chargeAmount > 0)
-            _fireRightChargeAmount = chargeAmount;
+        if (_photonView.IsMine) {
+            projectile.AddForce(force, ForceMode.VelocityChange);
 
-        if (photonview.IsMine)
-        {
-            photonview.RPC("FireRight", RpcTarget.AllViaServer, _fireRightChargeAmount, transform.rotation.eulerAngles.y);
-            projectile.AddForce(_launchArcRenderer.GetForceVector(transform.rotation.eulerAngles.y) * _shipStats.GetAttackRange() * _fireRightChargeAmount, ForceMode.VelocityChange);
-
+            _photonView.RPC("RPC_Fire", RpcTarget.Others, force, ProjectileStartPosition, RightCannonPosition, Direction.Right);
         }
-        else
-        {
-            projectile.AddForce(_launchArcRenderer.GetForceVector(eulerAnglesY) * _shipStats.GetAttackRange() * _fireRightChargeAmount, ForceMode.VelocityChange);
-        }
-
-
-        //projectile.AddForce(Vector3.one * _shipStats.GetAttackRange() * _fireRightChargeAmount, ForceMode.VelocityChange);
 
         // Instantiate cannon fire FX.
-        Instantiate(_cannonFireFX, _rightCannon.transform.position, Quaternion.AngleAxis(transform.rotation.eulerAngles.y + 90, Vector3.up));
-      
+        Instantiate(_cannonFireFX, RightCannonPosition, Quaternion.AngleAxis(transform.rotation.eulerAngles.y + 90, Vector3.up));
+
         // Set invisible of launchArcRenderer.
         _launchArcRenderer.SetVisibility(false);
     }
 
-    private void FireLeft(PhotonView photonview, float eulerY, float chargeAmount = 0)
-    {
+    private void FireLeft() {
+        // Force for apply to projectile.
+        Vector3 force = _launchArcRenderer.GetForceVector(transform.rotation.eulerAngles.y) * _shipStats.GetAttackRange() * _fireLeftChargeAmount;
+
+        // Start position about projectile.
+        ProjectileStartPosition = _launchArcRenderer.transform.position;
+
         // Instantiate projectile and add force based on launchArcRenderer.
-        Rigidbody projectile = Instantiate(_cannonProjectile, _launchArcRenderer.transform.position, Quaternion.identity).GetComponent<Rigidbody>();
-        _cannonProjectile.GetComponent<CannonProjectile>().InitializeBullet(_shipStats.Owner);
+        Rigidbody projectile = Instantiate(_cannonProjectile, ProjectileStartPosition, Quaternion.identity).GetComponent<Rigidbody>();
 
-        Debug.Log("eulerAngles: " + transform.rotation.eulerAngles.y);
+        if (_photonView.IsMine) {
+            projectile.AddForce(force, ForceMode.VelocityChange);
 
-        if (chargeAmount > 0)
-            _fireLeftChargeAmount = chargeAmount;
-
-        if (photonview.IsMine)
-        {
-            photonview.RPC("FireLeft", RpcTarget.AllViaServer, _fireLeftChargeAmount, transform.rotation.eulerAngles.y);
-            projectile.AddForce(_launchArcRenderer.GetForceVector(transform.rotation.eulerAngles.y) * _shipStats.GetAttackRange() * _fireLeftChargeAmount, ForceMode.VelocityChange);
-        }
-        else
-        {
-            projectile.AddForce(_launchArcRenderer.GetForceVector(eulerY) * _shipStats.GetAttackRange() * _fireLeftChargeAmount, ForceMode.VelocityChange);
+            _photonView.RPC("RPC_Fire", RpcTarget.Others, force, ProjectileStartPosition, LeftCannonPosition, Direction.Left);
         }
 
         // Instantiate cannon fire FX.
-        //projectile.AddForce(Vector3.one * _shipStats.GetAttackRange() * _fireLeftChargeAmount, ForceMode.VelocityChange);
+        Instantiate(_cannonFireFX, LeftCannonPosition, Quaternion.AngleAxis(transform.rotation.eulerAngles.y - 90, Vector3.up));
 
-        Instantiate(_cannonFireFX, _leftCannon.transform.position, Quaternion.AngleAxis(transform.rotation.eulerAngles.y - 90, Vector3.up));
-     
         // Set invisible of launchArcRenderer.
         _launchArcRenderer.SetVisibility(false);
     }
 
-    private void RenderArc(float velocity, LaunchArcRenderer.Direction direction)
-    {
+    [PunRPC]
+    private void RPC_Fire(Vector3 force, Vector3 startPos, Vector3 cannonPos, Direction direction) {
+        Debug.Log("Someone fired.");
+
+        // Instantiate projectile and add force based on launchArcRenderer.
+        Rigidbody projectile = Instantiate(_cannonProjectile, startPos, Quaternion.identity).GetComponent<Rigidbody>();
+        projectile.AddForce(force, ForceMode.VelocityChange);
+
+        // Cannon Fire FX rotation.
+        Quaternion FXrotation = Quaternion.identity;
+        switch (direction) {
+            case Direction.Right:
+                FXrotation = Quaternion.AngleAxis(transform.rotation.eulerAngles.y + 90, Vector3.up);
+                break;
+            case Direction.Left:
+                FXrotation = Quaternion.AngleAxis(transform.rotation.eulerAngles.y - 90, Vector3.up);
+                break;
+        }
+
+        // Instantiate cannon fire FX.
+        Instantiate(_cannonFireFX, cannonPos, FXrotation);
+    }
+
+    private void RenderArc(float velocity, LaunchArcRenderer.Direction direction) {
         // Set visible of launchArcRenderer.
         _launchArcRenderer.SetVisibility(true);
 
