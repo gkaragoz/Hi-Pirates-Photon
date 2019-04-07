@@ -7,7 +7,7 @@ public class PlayerController : MonoBehaviour {
     private Joystick _joystick;
 
     public Vector2 CurrentInput { get; set; }
-    private PhotonView _photonView { get; set; }
+    public PhotonView PhotonView { get; private set; }
 
     public bool HasInput {
         get {
@@ -25,10 +25,10 @@ public class PlayerController : MonoBehaviour {
     private ButtonCharger _btnLeftFire;
 
     private void Awake() {
-        _photonView = GetComponent<PhotonView>();
+        PhotonView = GetComponent<PhotonView>();
         _shipController = GetComponent<ShipController>();
 
-        if (_photonView.IsMine) {
+        if (PhotonView.IsMine) {
             _joystick = FindObjectOfType<Joystick>();
 
             _btnRightFire = GameObject.Find("BtnRightFire").GetComponent<ButtonCharger>();
@@ -44,7 +44,7 @@ public class PlayerController : MonoBehaviour {
     }
 
     private void Update() {
-        if (!_photonView.IsMine) {
+        if (!PhotonView.IsMine) {
             return;
         }
 
@@ -97,6 +97,10 @@ public class PlayerController : MonoBehaviour {
 
     public void ReleaseFireLeft() {
         _shipController.ReleaseFireLeft();
+    }
+
+    public Collider GetShipCollider() {
+        return _shipController.GetShipCollider();
     }
 
     public void Destroy() {

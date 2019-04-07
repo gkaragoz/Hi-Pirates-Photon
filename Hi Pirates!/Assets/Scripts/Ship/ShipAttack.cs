@@ -1,4 +1,5 @@
 ﻿using Photon.Pun;
+using System.Collections.Generic;
 using UnityEngine;
 
 [RequireComponent(typeof(ShipStats))]
@@ -47,11 +48,13 @@ public class ShipAttack : MonoBehaviour {
     [Utils.ReadOnly]
     private float _fireLeftChargeAmount = 0;
 
+    private BoxCollider _shipCollider;
     private PhotonView _photonView;
 
     private void Awake() {
         _shipStats = GetComponent<ShipStats>();
         _photonView = GetComponent<PhotonView>();
+        _shipCollider = GetComponent<BoxCollider>();
     }
 
     private void Update() {
@@ -127,6 +130,7 @@ public class ShipAttack : MonoBehaviour {
 
         // Instantiate projectile and add force based on launchArcRenderer.
         Rigidbody projectile = Instantiate(_cannonProjectile, ProjectileStartPosition, Quaternion.identity).GetComponent<Rigidbody>();
+        projectile.GetComponent<CannonProjectile>().InitializeBullet(_photonView.Owner);
 
         if (_photonView.IsMine) {
             projectile.AddForce(force, ForceMode.VelocityChange);
@@ -150,6 +154,7 @@ public class ShipAttack : MonoBehaviour {
 
         // Instantiate projectile and add force based on launchArcRenderer.
         Rigidbody projectile = Instantiate(_cannonProjectile, ProjectileStartPosition, Quaternion.identity).GetComponent<Rigidbody>();
+        projectile.GetComponent<CannonProjectile>().InitializeBullet(_photonView.Owner);
 
         if (_photonView.IsMine) {
             projectile.AddForce(force, ForceMode.VelocityChange);
@@ -165,11 +170,12 @@ public class ShipAttack : MonoBehaviour {
     }
 
     [PunRPC]
-    private void RPC_Fire(Vector3 force, Vector3 startPos, Vector3 cannonPos, Direction direction) {
-        Debug.Log("Someone fired.");
+    private void RPC_Fire(Vector3 force, Vector3 startPos, Vector3 cannonPos, Direction direction, PhotonMessageInfo info) {
+        Debug.Log("Someone fired: " + info.Sender.UserId);
 
         // Instantiate projectile and add force based on launchArcRenderer.
         Rigidbody projectile = Instantiate(_cannonProjectile, startPos, Quaternion.identity).GetComponent<Rigidbody>();
+        projectile.GetComponent<CannonProjectile>().InitializeBullet(info.Sender);
         projectile.AddForce(force, ForceMode.VelocityChange);
 
         // Cannon Fire FX rotation.

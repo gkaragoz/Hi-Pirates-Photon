@@ -1,18 +1,12 @@
 ﻿using UnityEngine;
-using ExitGames.Client.Photon;
 using Photon.Realtime;
 using Photon.Pun;
-using System.Collections.Generic;
-using Photon.Pun.UtilityScripts;
 
-public class LobbyManager : MonoBehaviourPunCallbacks
-{
-    private Dictionary<int, GameObject> playerListEntries;
+public class LobbyManager : MonoBehaviourPunCallbacks {
 
     public string username;
 
-    private void Start()
-    {
+    private void Start() {
         username = "Player " + Random.Range(1000, 10000);
 
         PhotonNetwork.LocalPlayer.NickName = username;
@@ -21,85 +15,27 @@ public class LobbyManager : MonoBehaviourPunCallbacks
         PhotonNetwork.AutomaticallySyncScene = true;
     }
 
-    #region PUN CALLBACKS
+    public override void OnConnectedToMaster() {
+        Debug.Log("OnConnectedToMaster");
 
-    public override void OnConnectedToMaster()
-    {
-        Debug.Log("connected to master");
+        Debug.Log("Trying to JoinRandomRoom");
         PhotonNetwork.JoinRandomRoom();
     }
 
-    public override void OnJoinRoomFailed(short returnCode, string message)
-    {
-        Debug.Log("OnJoinRoomFailed: " + message);
-    }
-
-    public override void OnCreateRoomFailed(short returnCode, string message)
-    {
+    public override void OnCreateRoomFailed(short returnCode, string message) {
         Debug.Log("OnCreateRoomFailed: " + message);
     }
 
-    public override void OnJoinRandomFailed(short returnCode, string message)
-    {
+    public override void OnJoinRandomFailed(short returnCode, string message) {
         Debug.Log("OnJoinRandomFailed: " + message);
-        Debug.Log("Creating Room because no random room found");
+        Debug.Log("Creating a new room.");
 
         string roomName = "Room " + Random.Range(1000, 10000);
 
         RoomOptions options = new RoomOptions { MaxPlayers = 8 };
 
+        Debug.Log("roomName: " + roomName + "(" + options.MaxPlayers + ")");
         PhotonNetwork.CreateRoom(roomName, options, null);
     }
-
-    public override void OnDisconnected(DisconnectCause cause)
-    {
-        base.OnDisconnected(cause);
-        Debug.Log(cause);
-    }
-
-    public override void OnRoomListUpdate(List<RoomInfo> roomList)
-    {
-
-    }
-
-    public override void OnLeftLobby()
-    {
-
-    }
-
-    public override void OnJoinedRoom()
-    {
-        if (playerListEntries == null)
-        {
-            playerListEntries = new Dictionary<int, GameObject>();
-        }
-
-        PhotonNetwork.Instantiate("Player", Vector3.zero, Quaternion.identity, 0);
-
-        Debug.Log("joined room");
-    }
-
-    public override void OnLeftRoom()
-    {
-        Debug.Log("room left");
-
-        PhotonNetwork.Disconnect();
-    }
-
-    public override void OnMasterClientSwitched(Player newMasterClient)
-    {
-
-    }
-
-    public override void OnPlayerPropertiesUpdate(Player targetPlayer, Hashtable changedProps)
-    {
-        if (changedProps.ContainsKey(GameVariables.PLAYER_HEALTH_FIELD))
-        {
-            //check if owned ship has been died 
-            return;
-        }
-    }
-
-    #endregion
 
 }

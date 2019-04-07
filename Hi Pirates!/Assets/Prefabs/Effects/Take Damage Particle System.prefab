@@ -4768,6 +4768,7 @@ GameObject:
   - component: {fileID: 198071383992876016}
   - component: {fileID: 199371706258135174}
   - component: {fileID: 82969592809609548}
+  - component: {fileID: 6616879633268954619}
   m_Layer: 0
   m_Name: Take Damage Particle System
   m_TagString: Untagged
@@ -9619,3 +9620,15 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 0
+--- !u!114 &6616879633268954619
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1147516365899284}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 20a65373f4c7b2d48bbcbb77b9488415, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
