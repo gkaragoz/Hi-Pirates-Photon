@@ -1,7 +1,7 @@
 ﻿using Photon.Pun;
 using UnityEngine;
 
-public class PlayerController : MonoBehaviour {
+public class PlayerController : MonoBehaviour, IPunObservable {
 
     [SerializeField]
     private Joystick _joystick;
@@ -77,6 +77,48 @@ public class PlayerController : MonoBehaviour {
         if (Input.GetKeyUp(KeyCode.KeypadMinus)) {
             ReleaseFireLeft();
         }
+    }
+
+    public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info) {
+        if (stream.IsWriting) {
+            stream.SendNext(GetCurrentPosition());
+            stream.SendNext(GetCurrentRotation());
+            stream.SendNext(GetCurrentVelocity());
+        } else {
+            Vector3 nextPosition = (Vector3)stream.ReceiveNext();
+            Quaternion nextRotation = (Quaternion)stream.ReceiveNext();
+            SetVelocity((Vector3)stream.ReceiveNext());
+
+            float lag = Mathf.Abs((float)(PhotonNetwork.Time - info.SentServerTime));
+            nextPosition += GetCurrentVelocity() * lag;
+
+            SetNextPosition(nextPosition);
+            SetNextRotation(nextRotation);
+        }
+    }
+
+    public Vector3 GetCurrentPosition() {
+        return _shipController.GetCurrentPosition();
+    }
+
+    public Quaternion GetCurrentRotation() {
+        return _shipController.GetCurrentRotation();
+    }
+
+    public Vector3 GetCurrentVelocity() {
+        return _shipController.GetCurrentVelocity();
+    }
+
+    public void SetNextPosition(Vector3 position) {
+        _shipController.SetNextPosition(position);
+    }
+
+    public void SetNextRotation(Quaternion rotation) {
+        _shipController.SetNextRotation(rotation);
+    }
+
+    public void SetVelocity(Vector3 velocity) {
+        _shipController.SetVelocity(velocity);
     }
 
     public void Move() {

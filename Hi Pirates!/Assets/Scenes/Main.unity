@@ -472,6 +472,7 @@ GameObject:
   - component: {fileID: 225484608}
   - component: {fileID: 225484607}
   - component: {fileID: 225484606}
+  - component: {fileID: 225484604}
   m_Layer: 5
   m_Name: HUD
   m_TagString: Untagged
@@ -479,6 +480,26 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!114 &225484604
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 225484603}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5867a53c8db0e6745818285bb6b6e1b9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  WindowRect:
+    serializedVersion: 2
+    x: 0
+    y: 100
+    width: 120
+    height: 100
+  WindowId: 101
+  Visible: 1
 --- !u!114 &225484606
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1134,7 +1155,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &492302243
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1324,7 +1345,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &548255564
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1736,7 +1757,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &684021146
 RectTransform:
   m_ObjectHideFlags: 0
@@ -3129,7 +3150,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1818757760
 RectTransform:
   m_ObjectHideFlags: 0
@@ -3539,7 +3560,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &2081523263
 RectTransform:
   m_ObjectHideFlags: 0
@@ -3627,7 +3648,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &2086078257
 RectTransform:
   m_ObjectHideFlags: 0
@@ -3818,4 +3839,3 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 45f9d15c146a3e741a3d909085c66b6a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _playerList: []

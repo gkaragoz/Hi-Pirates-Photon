@@ -22,6 +22,30 @@ public class ShipController : MonoBehaviour {
         _shipCollider = GetComponent<BoxCollider>();
     }
 
+    public Vector3 GetCurrentPosition() {
+        return _shipMotor.GetCurrentPosition();
+    }
+
+    public Quaternion GetCurrentRotation() {
+        return _shipMotor.GetCurrentRotation();
+    }
+
+    public Vector3 GetCurrentVelocity() {
+        return _shipMotor.GetCurrentVelocity();
+    }
+
+    public void SetNextPosition(Vector3 position) {
+        _shipMotor.SetNextPosition(position);
+    }
+
+    public void SetNextRotation(Quaternion rotation) {
+        _shipMotor.SetNextRotation(rotation);
+    }
+
+    public void SetVelocity(Vector3 velocity) {
+        _shipMotor.SetVelocity(velocity);
+    }
+
     public void MoveToInput(Vector2 input) {
         _shipMotor.MoveToInput(input);
     }
