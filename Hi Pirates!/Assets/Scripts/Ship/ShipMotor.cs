@@ -6,8 +6,9 @@ public class ShipMotor : MonoBehaviour {
 
     public int MyProperty { get; set; }
 
-    private Vector3 _nextPosition;
-    private Quaternion _nextRotation;
+    private Vector2 _remoteInput;
+    private Quaternion _remoteRotation;
+    private float _remoteRotationSpeed = 4f;
 
     private ShipStats _shipStats;
     private Rigidbody _rb;
@@ -21,9 +22,21 @@ public class ShipMotor : MonoBehaviour {
 
     private void FixedUpdate() {
         if (!_photonView.IsMine) {
-            _rb.position = Vector3.MoveTowards(_rb.position, _nextPosition, Time.fixedDeltaTime);
-            _rb.rotation = Quaternion.RotateTowards(_rb.rotation, _nextRotation, Time.fixedDeltaTime * 100f);
+            ProcessRemoteInput();
+            ProcessRemoteRotation();
         }
+    }
+
+    private void ProcessRemoteInput() {
+        _rb.velocity = new Vector3(_remoteInput.x * _shipStats.GetMovementSpeed(), 0f, _remoteInput.y * _shipStats.GetMovementSpeed());
+    }
+
+    private void ProcessRemoteRotation() {
+        if (_remoteRotation.eulerAngles.magnitude <= 0) {
+            return;
+        }
+
+        _rb.MoveRotation(Quaternion.Lerp(transform.rotation, _remoteRotation, Time.fixedDeltaTime * _remoteRotationSpeed));
     }
 
     public Vector3 GetCurrentPosition() {
@@ -31,28 +44,27 @@ public class ShipMotor : MonoBehaviour {
     }
 
     public Quaternion GetCurrentRotation() {
-        return _rb.rotation;
+        return transform.rotation;
     }
 
-    public Vector3 GetCurrentVelocity() {
-        return _rb.velocity;
+    public void SetRemoteInput(Vector2 input) {
+        _remoteInput = input;
     }
 
-    public void SetNextPosition(Vector3 position) {
-        _nextPosition = position;
+    public void SetRemoteRotation(Quaternion rotation) {
+        _remoteRotation = rotation;
     }
 
-    public void SetNextRotation(Quaternion rotation) {
-        _nextRotation = rotation;
-    }
-
-    public void SetVelocity(Vector3 velocity) {
-        _rb.velocity = velocity;
-    }
-
-    public void MoveToInput(Vector2 input) {
+    public void MoveToLocalInput(Vector2 input) {
         _rb.velocity = transform.forward * _shipStats.GetMovementSpeed() * input.magnitude;
-        _rb.MoveRotation(Quaternion.Lerp(transform.rotation, Quaternion.LookRotation(new Vector3(input.x, 0, input.y)), Time.deltaTime * _shipStats.GetRotationSpeed()));
+    }
+
+    public void RotateToLocalInput(Vector2 input) {
+        if (input.magnitude <= 0) {
+            return;
+        }
+
+        _rb.MoveRotation(Quaternion.Lerp(transform.rotation, Quaternion.LookRotation(new Vector3(input.x, 0, input.y)), Time.fixedDeltaTime * _shipStats.GetRotationSpeed()));
     }
 
 }

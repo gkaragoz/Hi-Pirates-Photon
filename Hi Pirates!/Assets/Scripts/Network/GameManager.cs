@@ -19,10 +19,10 @@ public class GameManager : MonoBehaviourPunCallbacks {
     #endregion
     
     public PlayerController GetPlayer(Player player) {
-        var playerList = GameObject.FindObjectsOfType<PlayerController>();
+        var playerList = GameObject.FindObjectsOfType<PlayerNetwork>();
         for (int ii = 0; ii < playerList.Length; ii++) {
-            if (player == playerList[ii].PhotonView.Owner) {
-                return playerList[ii];
+            if (player == playerList[ii].photonView.Owner) {
+                return playerList[ii].GetComponent<PlayerController>();
             }
         }
         return null;

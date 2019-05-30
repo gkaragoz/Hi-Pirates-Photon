@@ -30,24 +30,20 @@ public class ShipController : MonoBehaviour {
         return _shipMotor.GetCurrentRotation();
     }
 
-    public Vector3 GetCurrentVelocity() {
-        return _shipMotor.GetCurrentVelocity();
+    public void SetRemoteInput(Vector2 input) {
+        _shipMotor.SetRemoteInput(input);
     }
 
-    public void SetNextPosition(Vector3 position) {
-        _shipMotor.SetNextPosition(position);
+    public void SetRemoteRotation(Quaternion rotation) {
+        _shipMotor.SetRemoteRotation(rotation);
     }
 
-    public void SetNextRotation(Quaternion rotation) {
-        _shipMotor.SetNextRotation(rotation);
+    public void MoveToLocalInput(Vector2 input) {
+        _shipMotor.MoveToLocalInput(input);
     }
 
-    public void SetVelocity(Vector3 velocity) {
-        _shipMotor.SetVelocity(velocity);
-    }
-
-    public void MoveToInput(Vector2 input) {
-        _shipMotor.MoveToInput(input);
+    public void RotateToLocalInput(Vector2 input) {
+        _shipMotor.RotateToLocalInput(input);
     }
 
     public void SetOwner(Player player) {
